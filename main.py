@@ -1,8 +1,5 @@
 # %%
-import logging
-
-from matplotlib import pyplot
-from pandas import DataFrame, read_csv
+from pandas import read_csv
 
 from config import FAKE_VOLTAGE_DATA_PATH
 from electric_read import ElectricRead
@@ -15,8 +12,6 @@ electric_reads = [ElectricRead(time=row["Time"], id=row["ID"],
 frames = Frames(electric_reads)
 
 for id in frames:
-    df = DataFrame(data=frames.get_time_sorted_frame_by_id(id))
-    logging.info(f"New dataframe for ID {id}")
-    pyplot.plot(df["Time"], df["Voltage"])
+    frames.add_frame_to_plot_by_id(id)
 
-pyplot.show()
+frames.show_plots()

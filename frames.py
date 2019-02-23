@@ -1,3 +1,9 @@
+import logging
+
+from matplotlib import pyplot
+from pandas import DataFrame, read_csv
+
+
 class Frames:
     def __init__(self, reads=[]):
         self._frames = {}
@@ -38,6 +44,14 @@ class Frames:
     def get_time_sorted_frame_by_id(self, id: str):
         frame = self.get_frame_by_id(id)
         return self._sort_voltage_and_kwh_by_time(frame)
+
+    def add_frame_to_plot_by_id(self, id):
+        df = DataFrame(data=self.get_time_sorted_frame_by_id(id))
+        logging.info(f"Plotting by ID {id}")
+        pyplot.plot(df["Time"], df["Voltage"])
+
+    def show_plots(self):
+        pyplot.show()
 
     def _sort_voltage_and_kwh_by_time(self, dictionary_of_time_voltage_kwh):
         sorted_dictionary = {}
