@@ -1,8 +1,11 @@
 class Frames:
-    def __init__(self):
+    def __init__(self, reads=[]):
         self._frames = {}
         self._ids = []
         self._current_id_index = 0
+
+        for read in reads:
+            self.add(read)
 
     def __iter__(self):
         return self

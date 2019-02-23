@@ -12,9 +12,7 @@ rows = read_csv(FAKE_VOLTAGE_DATA_PATH)
 electric_reads = [ElectricRead(time=row["Time"], id=row["ID"],
                                voltage=row["Voltage"], kwh=row["KWH"]) for index, row in rows.iterrows()]
 
-frames = Frames()
-for read in electric_reads:
-    frames.add(read)
+frames = Frames(electric_reads)
 
 for id in frames:
     df = DataFrame(data=frames.get_time_sorted_frame_by_id(id))
