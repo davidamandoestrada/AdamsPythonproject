@@ -47,7 +47,7 @@ class Frames:
 
     def add_frame_to_plot_by_id(self, id):
         df = DataFrame(data=self.get_time_sorted_frame_by_id(id))
-        logging.info(f"Plotting by ID {id}")
+        logging.info(f"Add frame with ID {id} to plot")
         pyplot.plot(df["Time"], df["Voltage"])
 
     def show_plots(self):
