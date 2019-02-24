@@ -18,6 +18,7 @@ class Frames:
 
     def __next__(self):
         if self._current_id_index >= len(self._ids):
+            self._current_id_index = 0
             raise StopIteration
         else:
             self._current_id_index += 1
