@@ -14,3 +14,5 @@ for id in frames:
     frames.add_frame_to_plot_by_id(id=id)
 
 frames.show_plots()
+outliers = frames.get_outliers()
+print(outliers)

@@ -1,7 +1,9 @@
 import logging
+import smirnov_grubbs as grubbs
 
 from matplotlib import pyplot
 from pandas import DataFrame, read_csv
+import numpy as np
 
 
 class Frames:
@@ -59,3 +61,23 @@ class Frames:
         sorted_dictionary["Time"], sorted_dictionary["Voltage"], sorted_dictionary["KWH"] = zip(
             *sorted(zip(dictionary_of_time_voltage_kwh["Time"], dictionary_of_time_voltage_kwh["Voltage"], dictionary_of_time_voltage_kwh["KWH"])))
         return sorted_dictionary
+    
+    # This takes all the voltage reads and makes a numPy array. I assume the data is all sorted in time
+    def build_voltage_np_array(self):
+        voltage_matrix = []
+        for id in self.frames:
+            #print(self.frames[id]["Voltage"])
+            voltage_matrix.append(self.frames[id]["Voltage"])
+        return np.array(voltage_matrix)
+    
+    #Not done yet, need to take all the outliers found for each time slice to decide
+    #which device(s) is the outlier, if any
+    def get_outliers(self):
+        outliers = []
+        voltage_np_array = self.build_voltage_np_array() 
+        # Get outliers of voltages at each time / column, so iterate thru the columns
+        # Thus iterate thru the transpose   
+        for col in voltage_np_array.T:
+            outliers.append(grubbs.min_test_indices(col, alpha=0.05))
+        return outliers
+            
